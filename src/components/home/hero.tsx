@@ -1,14 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Photo } from "@/components/photo";
 import { business } from "@/lib/site";
 
 export function Hero() {
   return (
     <section className="relative min-h-[88vh] overflow-hidden bg-ink text-paper">
-      <img
+      <Photo
         src="/images/hero.jpg"
         alt="New-build metal roof on a rural Western Australian residential block"
-        className="absolute inset-0 h-full w-full object-cover"
+        pictureClassName="absolute inset-0 block h-full w-full"
+        className="h-full w-full object-cover"
+        width={1792}
+        height={1008}
+        sizes="100vw"
+        priority
       />
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/20" />
       <div className="relative mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-end px-5 pb-8 pt-28 sm:px-8 sm:pb-10">

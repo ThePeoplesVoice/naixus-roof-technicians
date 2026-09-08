@@ -1,3 +1,4 @@
+import { Photo } from "@/components/photo";
 import { walk } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -33,10 +34,13 @@ export function Process() {
                     flip && "lg:col-start-6",
                   )}
                 >
-                  <img
+                  <Photo
                     src={step.image}
                     alt={step.alt}
                     className="aspect-[4/3] w-full object-cover"
+                    width={1400}
+                    height={1050}
+                    sizes="(min-width: 1024px) 58vw, 100vw"
                   />
                 </div>
                 <div

@@ -1,3 +1,4 @@
+import { Photo } from "@/components/photo";
 import { jobPlates } from "@/lib/site";
 
 export function OnSite() {
@@ -22,10 +23,13 @@ export function OnSite() {
         </div>
 
         <figure className="mt-10 overflow-hidden rounded-xl">
-          <img
+          <Photo
             src={feature.image}
             alt={feature.alt}
             className="aspect-[3/2] w-full object-cover object-[center_40%]"
+            width={1400}
+            height={933}
+            sizes="(min-width: 1152px) 1120px, 100vw"
           />
           <figcaption className="mt-3 text-[0.7rem] uppercase tracking-[0.16em] text-paper/45">
             {feature.caption}
@@ -36,10 +40,13 @@ export function OnSite() {
           {rest.map((plate) => (
             <li key={plate.image}>
               <figure className="overflow-hidden rounded-xl">
-                <img
+                <Photo
                   src={plate.image}
                   alt={plate.alt}
                   className="aspect-[4/3] w-full object-cover"
+                  width={1400}
+                  height={1050}
+                  sizes="(min-width: 640px) 33vw, 100vw"
                 />
                 <figcaption className="mt-3 text-[0.7rem] uppercase tracking-[0.16em] text-paper/45">
                   {plate.caption}

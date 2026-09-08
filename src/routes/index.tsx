@@ -11,6 +11,7 @@ import { Valley } from "@/components/home/valley";
 import { Work } from "@/components/home/work";
 import { SiteShell } from "@/components/site-shell";
 import { bio, business, suburbs } from "@/lib/site";
+import { SITE_URL, absUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -20,8 +21,12 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "RoofingContractor",
   name: business.name,
+  url: SITE_URL,
   description: bio,
-  areaServed: suburbs.map((name) => ({ "@type": "City", name })),
+  image: absUrl("/og.jpg"),
+  telephone: business.phoneTel,
+  email: business.email,
+  areaServed: suburbs.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "State", name: "Western Australia" } })),
   address: {
     "@type": "PostalAddress",
     addressLocality: "Keysbrook",
@@ -29,12 +34,22 @@ const jsonLd = {
     postalCode: "6126",
     addressCountry: "AU",
   },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -32.433,
+    longitude: 115.983,
+  },
   founder: {
     "@type": "Person",
     name: business.operator,
   },
-  telephone: business.phoneTel,
-  email: business.email,
+  knowsAbout: [
+    "Roof sarking",
+    "Roof sheeting",
+    "Valley flashing",
+    "Ridge capping",
+    "New-build residential roofing",
+  ],
 };
 
 function Home() {

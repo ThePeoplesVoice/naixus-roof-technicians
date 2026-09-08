@@ -1,3 +1,4 @@
+import { Photo } from "@/components/photo";
 import { services } from "@/lib/site";
 
 export function Work() {
@@ -20,10 +21,13 @@ export function Work() {
           {services.map((service) => (
             <article key={service.id} className="group">
               <figure className="relative overflow-hidden rounded-xl bg-ink">
-                <img
+                <Photo
                   src={service.image}
                   alt={service.alt}
                   className="aspect-[4/3] w-full object-cover opacity-95 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                  width={1400}
+                  height={1050}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-ink/85 to-transparent px-5 pb-4 pt-16 text-paper">
                   <span className="font-display text-xl font-medium leading-tight sm:text-2xl">

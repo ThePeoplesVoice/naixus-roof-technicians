@@ -3,18 +3,23 @@ import { ContactLines } from "@/components/contact-lines";
 import { EnquireForm } from "@/components/enquire-form";
 import { SiteShell } from "@/components/site-shell";
 import { business } from "@/lib/site";
+import { absUrl } from "@/lib/seo";
+
+const title = `Enquire — ${business.name}`;
+const description =
+  "Enquire about a new-build residential roof in South West WA. Sarking through to ridge capping. Limited projects each month.";
 
 export const Route = createFileRoute("/enquire")({
   component: EnquirePage,
   head: () => ({
     meta: [
-      { title: `Enquire — ${business.name}` },
-      {
-        name: "description",
-        content:
-          "Enquire about a new-build residential roof in South West WA. Sarking through to ridge capping. Limited projects each month.",
-      },
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:url", content: absUrl("/enquire") },
     ],
+    links: [{ rel: "canonical", href: absUrl("/enquire") }],
   }),
 });
 
