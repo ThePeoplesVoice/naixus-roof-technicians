@@ -7,7 +7,7 @@ import { absUrl } from "@/lib/seo";
 
 const title = `Enquire — ${business.name}`;
 const description =
-  "Enquire about a new-build residential roof in South West WA. Sarking through to ridge capping. Limited projects each month.";
+  "Enquire about a new-build residential roof in Serpentine–Jarrahdale, Armadale or Peel. Sarking through to ridge capping. Limited projects each month.";
 
 export const Route = createFileRoute("/enquire")({
   component: EnquirePage,
@@ -32,12 +32,12 @@ function EnquirePage() {
             Enquire
           </p>
           <h1 className="mt-3 font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">
-            New-build residential. South West WA.
+            New-build residential. Peel corridor.
           </h1>
           <p className="mt-5 text-base leading-relaxed text-ink-soft">
-            If you’re building in the corridor and need sarking through to ridge
-            capping done properly the first time, write in. Limited projects each
-            month.
+            If you’re building in Serpentine–Jarrahdale, Armadale or Peel and
+            need sarking through to ridge capping done properly the first time,
+            write in. Limited projects each month.
           </p>
           <div className="mt-8">
             <ContactLines />
