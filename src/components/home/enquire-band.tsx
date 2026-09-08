@@ -14,7 +14,7 @@ export function EnquireBand() {
             later.
           </h2>
           <p className="mt-5 text-base leading-relaxed text-paper/75">
-            Booking a limited number of new builds at a time. South West WA
+            Booking a limited number of new builds at a time. Peel corridor
             builders — if your next new build needs this, let’s talk.
           </p>
           <div className="mt-8">
