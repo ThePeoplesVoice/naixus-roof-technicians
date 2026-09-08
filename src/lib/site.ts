@@ -5,8 +5,8 @@ export const business = {
   abn: "19 542 516 839",
   base: "Keysbrook, WA",
   years: 15,
-  tagline: "New builds. Sarking to ridge capping. South West WA.",
-  promise: "South West focused for South Western Australians.",
+  tagline: "New builds. Sarking to ridge capping. Peel corridor.",
+  promise: "Serpentine–Jarrahdale, Armadale, Peel.",
   cta: "Message us",
   email: "sbt.family.trust@gmail.com",
   phone: "0415 713 371",
@@ -101,7 +101,7 @@ export const spec = [
   { k: "Order", v: "Sarking first — before a single sheet." },
   { k: "Fall", v: "Valleys run with proper fall. Water has a path." },
   { k: "Lap", v: "Sheets, caps and flashings lap the right way." },
-  { k: "Books", v: "Limited new builds each month. South West WA." },
+  { k: "Books", v: "Limited new builds each month. Peel corridor." },
 ] as const;
 
 export const walk = [
@@ -176,4 +176,4 @@ export const nav = [
 ] as const;
 
 export const bio =
-  "Naixus Roof Technicians — specialist roof sheeting, valleys, and ridge capping for new-build residential projects across Perth’s South West and Peel, from Serpentine–Jarrahdale through to Armadale and the Baldivis–Byford–Pinjarra corridor. Sarking and insulation through to standard finishing flashings, done to a standard that holds up. 15 years in WA construction. Selective about what we take on. Currently taking on a limited number of new-build projects each month — get in touch early if you’re planning ahead.";
+  "Naixus Roof Technicians — specialist roof sheeting, valleys, and ridge capping for new-build residential projects in the Peel corridor: Serpentine–Jarrahdale, Armadale, and Peel. Based in Keysbrook. Sarking and insulation through to standard finishing flashings, done to a standard that holds up. 15 years in WA construction. Selective about what we take on. Currently taking on a limited number of new-build projects each month — get in touch early if you’re planning ahead.";
