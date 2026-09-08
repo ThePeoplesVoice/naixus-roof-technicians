@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", "Times New Roman", serif;
+
+  --color-paper: #f3efe6;
+  --color-paper-2: #e7e0d2;
+  --color-ink: #1a1916;
+  --color-ink-soft: #3c3933;
+  --color-stone: #8a8478;
+  --color-metal: #3e4a51;
+  --color-metal-fg: #f3efe6;
+  --color-rule: #d4cdc0;
+  --color-focus: #3e4a51;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.25rem;
+
+  --shadow-border:
+    0 0 0 1px rgb(26 25 22 / 0.06),
+    0 1px 2px -1px rgb(26 25 22 / 0.06),
+    0 2px 4px 0 rgb(26 25 22 / 0.04);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    outline: 1px solid rgb(26 25 22 / 0.1);
+    outline-offset: -1px;
+  }
+
+  ::selection {
+    background: var(--color-metal);
+    color: var(--color-metal-fg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
