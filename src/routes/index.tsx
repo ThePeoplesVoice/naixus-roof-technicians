@@ -26,7 +26,16 @@ const jsonLd = {
   image: absUrl("/og.jpg"),
   telephone: business.phoneTel,
   email: business.email,
-  areaServed: suburbs.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "State", name: "Western Australia" } })),
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Serpentine-Jarrahdale" },
+    { "@type": "AdministrativeArea", name: "City of Armadale" },
+    { "@type": "AdministrativeArea", name: "Peel region" },
+    ...suburbs.map((name) => ({
+      "@type": "City",
+      name,
+      containedInPlace: { "@type": "State", name: "Western Australia" },
+    })),
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Keysbrook",

@@ -3,10 +3,10 @@ import { business } from "@/lib/site";
 export const SITE_URL = "https://naixus-roof-technicians.vercel.app";
 
 export const defaultTitle =
-  "Naixus Roof Technicians — New-build roofing, South West WA";
+  "Naixus Roof Technicians — New-build roofing, Peel corridor";
 
 export const defaultDescription =
-  "Specialist roof sheeting, valleys and ridge capping for new-build residential projects across Perth’s South West and Peel. Sarking through to finishing flashings. Keysbrook, WA.";
+  "Specialist roof sheeting, valleys and ridge capping for new-build residential projects in Serpentine–Jarrahdale, Armadale and Peel. Sarking through to finishing flashings. Keysbrook, WA.";
 
 export function absUrl(path = "/") {
   if (path.startsWith("http")) return path;
@@ -36,7 +36,10 @@ export function rootHead() {
       { property: "og:description", content: defaultDescription },
       { property: "og:url", content: url },
       { property: "og:image", content: image },
-      { property: "og:image:alt", content: `${business.name} — new-build roofing, South West WA` },
+      {
+        property: "og:image:alt",
+        content: `${business.name} — new-build roofing, Peel corridor`,
+      },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: defaultTitle },
       { name: "twitter:description", content: defaultDescription },

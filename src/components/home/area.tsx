@@ -19,7 +19,7 @@ export function Area() {
           <div className="mt-8 overflow-hidden rounded-xl">
             <img
               src="/images/scarp.jpg"
-              alt="Darling Scarp jarrah country, South West Western Australia"
+              alt="Darling Scarp jarrah country near Keysbrook, Peel corridor Western Australia"
               className="aspect-[16/10] w-full object-cover"
             />
           </div>

@@ -1,3 +1,5 @@
 # Naixus Roof Technicians
 
-New-build residential roofing — sarking to ridge capping — South West WA. Keysbrook based. Limited books.
+New-build residential roofing — sarking to ridge capping — Peel corridor. Keysbrook based. Limited books.
+
+Service area: Serpentine–Jarrahdale, Armadale, Peel. Not Bunbury / Busselton / Margaret River.
