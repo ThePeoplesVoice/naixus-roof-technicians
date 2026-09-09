@@ -14,7 +14,7 @@ export function NotFound() {
         </h1>
         <p className="mt-5 max-w-md text-base leading-relaxed text-ink-soft">
           The roof still is. Head back to the work, or write in about a
-          new-build in South West WA.
+          new-build in the Peel corridor.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
           <Button asChild size="lg">

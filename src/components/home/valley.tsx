@@ -24,7 +24,7 @@ export function Valley() {
           <p className="mt-6 max-w-lg text-base leading-relaxed text-paper/80">
             Proper fall, proper lap, no shortcuts — that’s the difference
             between a roof that lasts 30 years and one that doesn’t. This is the
-            standard on every new build we take on in South West WA.
+            standard on every new build we take on in the Peel corridor.
           </p>
         </blockquote>
       </div>
