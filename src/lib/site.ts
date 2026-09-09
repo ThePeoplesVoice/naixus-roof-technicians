@@ -65,8 +65,8 @@ export const services = [
     name: "Sarking & roll insulation",
     summary:
       "The layer nobody sees. Sarking goes down first — keeping the build dry and insulated before a single sheet goes on.",
-    image: "/images/job-sarking.jpg",
-    alt: "Under-sheet insulation and foil being laid on a new-build roof before sheeting",
+    image: "/images/day-ridge.jpg",
+    alt: "Under-sheet roll insulation laid along the roof plane before corrugated sheeting",
   },
   {
     id: "sheeting",
@@ -109,8 +109,8 @@ export const walk = [
     num: "01",
     title: "Sarking",
     line: "The layer nobody sees. It goes down first — keeping the build dry and insulated before a single sheet goes on.",
-    image: "/images/job-sarking.jpg",
-    alt: "Under-sheet insulation and foil being laid on a new-build roof before sheeting",
+    image: "/images/day-ridge.jpg",
+    alt: "Under-sheet roll insulation laid along the roof plane before corrugated sheeting",
   },
   {
     num: "02",
@@ -144,24 +144,24 @@ export const walk = [
 
 export const jobPlates = [
   {
-    image: "/images/job-sheeting.jpg",
-    alt: "Corrugated sheets being laid over insulation on a new-build roof",
-    caption: "Sheeting over insulation",
+    image: "/images/day-ridge.jpg",
+    alt: "Roll insulation down one roof plane, corrugated sheets on the other",
+    caption: "Insulation first, then the sheets",
   },
   {
-    image: "/images/job-sarking.jpg",
-    alt: "Under-sheet insulation being laid on an open roof frame",
-    caption: "Insulation first",
+    image: "/images/day-eave.jpg",
+    alt: "Under-sheet roll insulation lapping the eave over corrugated cladding",
+    caption: "Under-sheet roll",
   },
   {
-    image: "/images/job-frame.jpg",
-    alt: "Open timber roof frame on a new brick house with insulation bags along the eaves",
-    caption: "Frame open",
+    image: "/images/day-height.jpg",
+    alt: "Two-storey new-build roof with insulation on open timber trusses",
+    caption: "Two storey",
   },
   {
-    image: "/images/job-staged.jpg",
-    alt: "Monument corrugated roof sheets staged on the sand beside a new-build",
-    caption: "Sheets staged",
+    image: "/images/day-frame.jpg",
+    alt: "Open roof frame with foil sarking and roll insulation going down",
+    caption: "Sarking on the frame",
   },
 ] as const;
 

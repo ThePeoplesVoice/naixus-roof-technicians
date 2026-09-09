@@ -13,12 +13,12 @@ export function OnSite() {
               On the tools
             </p>
             <h2 className="mt-3 font-display text-3xl font-medium tracking-[-0.02em] sm:text-4xl">
-              320 square metres. Insulation first, then the sheets.
+              240 square metres. Two storey. Insulation and cladding in a day.
             </h2>
           </div>
           <p className="max-w-sm text-sm leading-relaxed text-paper/70">
-            New-build residential. Under-sheet insulation, then Monument
-            corrugated sheeting. Same order every time.
+            New-build residential. Under-sheet roll insulation, then the
+            cladding. Same order every time.
           </p>
         </div>
 

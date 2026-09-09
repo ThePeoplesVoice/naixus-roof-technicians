@@ -1,3 +1,4 @@
+import { Photo } from "@/components/photo";
 import { business } from "@/lib/site";
 
 export function About() {
@@ -14,6 +15,16 @@ export function About() {
           <h2 className="mt-3 font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">
             {business.operator}
           </h2>
+          <figure className="mt-8 overflow-hidden rounded-xl bg-ink">
+            <Photo
+              src="/images/day-shawn.jpg"
+              alt="Shawn Dhu on a new-build roof after laying under-sheet insulation"
+              className="aspect-[4/5] w-full object-cover object-[center_20%]"
+              width={900}
+              height={1125}
+              sizes="(min-width: 1024px) 320px, 100vw"
+            />
+          </figure>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">
           <p className="font-display text-2xl leading-snug text-ink sm:text-3xl">
