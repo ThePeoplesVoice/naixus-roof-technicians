@@ -13,8 +13,7 @@ export function NotFound() {
           That page isn’t here.
         </h1>
         <p className="mt-5 max-w-md text-base leading-relaxed text-ink-soft">
-          The roof still is. Head back to the work, or write in about a
-          new-build in the Peel corridor.
+          The roof still is. Head back, or write in about a new-build.
         </p>
         <div className="mt-9 flex flex-wrap gap-3">
           <Button asChild size="lg">

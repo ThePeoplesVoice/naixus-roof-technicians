@@ -6,25 +6,16 @@ export function Area() {
       <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-metal">
-            03 — Area
+            Area
           </p>
           <h2 className="mt-3 font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">
-            {business.promise}
+            Keysbrook. Serpentine, Jarrahdale, Armadale and Peel.
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-ink-soft">
-            Serpentine–Jarrahdale, Armadale, and the Peel corridor. Based in
-            Keysbrook. If you’re building residential here and need the roof
-            done right, this is who you call.
+          <p className="mt-5 max-w-md text-base leading-relaxed text-ink-soft">
+            New residential roofs in this corridor. Based in {business.base}.
           </p>
-          <div className="mt-8 overflow-hidden rounded-xl">
-            <img
-              src="/images/scarp.jpg"
-              alt="Darling Scarp jarrah country near Keysbrook, Peel corridor Western Australia"
-              className="aspect-[16/10] w-full object-cover"
-            />
-          </div>
         </div>
-        <div className="grid gap-8 sm:grid-cols-2 lg:col-span-7 lg:grid-cols-1 lg:pt-16">
+        <div className="grid gap-8 sm:grid-cols-2 lg:col-span-6 lg:col-start-7 lg:grid-cols-1 lg:pt-10">
           {areaGroups.map((group) => (
             <div key={group.label} className="border-t border-rule pt-5">
               <p className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-stone">

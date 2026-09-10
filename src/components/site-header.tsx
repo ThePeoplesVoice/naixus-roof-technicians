@@ -36,7 +36,7 @@ export function SiteHeader() {
               {business.short}
             </span>
             <span className="block text-[0.625rem] uppercase tracking-[0.16em] text-stone">
-              Roof Technicians
+              Roofing
               <span className="hidden sm:inline"> · Keysbrook</span>
             </span>
           </span>

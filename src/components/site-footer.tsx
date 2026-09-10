@@ -33,7 +33,7 @@ export function SiteFooter() {
         </div>
         <div className="md:col-span-4">
           <p className="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-paper/50">
-            Peel corridor
+            Area
           </p>
           <p className="mt-4 text-sm leading-relaxed text-paper/80">
             {suburbs.join(" · ")}

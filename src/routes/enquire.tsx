@@ -32,12 +32,11 @@ function EnquirePage() {
             Enquire
           </p>
           <h1 className="mt-3 font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">
-            New-build residential. Peel corridor.
+            New-build residential.
           </h1>
           <p className="mt-5 text-base leading-relaxed text-ink-soft">
-            If you’re building in Serpentine–Jarrahdale, Armadale or Peel and
-            need sarking through to ridge capping done properly the first time,
-            write in. Limited projects each month.
+            Building in Keysbrook, Serpentine, Jarrahdale, Armadale or Peel.
+            Sarking through to ridge capping. Limited projects each month.
           </p>
           <div className="mt-8">
             <ContactLines />

@@ -56,7 +56,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
       role: fields.role,
       suburb: fields.suburb,
       message: fields.message.trim(),
-      _subject: `Naixus enquiry — ${fields.suburb}`,
+      _subject: `Dhu Roofing enquiry — ${fields.suburb}`,
       _template: "table",
       _captcha: "false",
     };
