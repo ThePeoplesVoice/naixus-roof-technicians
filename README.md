@@ -1,5 +1,7 @@
 # Dhu Roofing
 
-New-build residential roofing — sarking to ridge capping — Peel corridor. Keysbrook based. Limited books.
+New-build residential roofs. Keysbrook, Serpentine, Jarrahdale, Armadale and the Peel corridor.
 
-Service area: Serpentine–Jarrahdale, Armadale, Peel. Not Bunbury / Busselton / Margaret River.
+Clean work. On time. Fair price.
+
+Live: https://naixus-roof-technicians.vercel.app

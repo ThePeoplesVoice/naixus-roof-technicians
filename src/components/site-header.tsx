@@ -32,12 +32,11 @@ export function SiteHeader() {
         >
           <Mark className="text-metal" />
           <span className="leading-tight">
-            <span className="block font-sans text-[0.7rem] font-medium uppercase tracking-[0.28em]">
-              {business.short}
+            <span className="block font-sans text-[0.7rem] font-medium uppercase tracking-[0.22em]">
+              Dhu Roofing
             </span>
             <span className="block text-[0.625rem] uppercase tracking-[0.16em] text-stone">
-              Roofing
-              <span className="hidden sm:inline"> · Keysbrook</span>
+              Keysbrook, WA
             </span>
           </span>
         </Link>

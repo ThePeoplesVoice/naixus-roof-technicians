@@ -17,6 +17,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "RoofingContractor",
   name: business.name,
+  alternateName: ["Dhu Roofing Keysbrook", "Shawn Dhu Roofing"],
+  brand: { "@type": "Brand", name: business.name },
   url: SITE_URL,
   description: bio,
   image: absUrl("/og.jpg"),

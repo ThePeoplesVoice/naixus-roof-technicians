@@ -29,7 +29,7 @@ function EnquirePage() {
       <main id="main" className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:py-24">
         <div className="lg:col-span-5">
           <p className="text-[0.7rem] font-medium uppercase tracking-[0.22em] text-metal">
-            Enquire
+            {business.name}
           </p>
           <h1 className="mt-3 font-display text-4xl font-medium tracking-[-0.02em] sm:text-5xl">
             New-build residential.

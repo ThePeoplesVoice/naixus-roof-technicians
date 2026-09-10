@@ -19,12 +19,10 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" />
       <div className="relative mx-auto flex min-h-[82vh] max-w-6xl flex-col justify-end px-5 pb-10 pt-28 sm:px-8 sm:pb-14">
         <p className="text-[0.7rem] font-medium uppercase tracking-[0.28em] text-paper/75">
-          {business.operator} · {business.base}
+          {business.name} · {business.base}
         </p>
         <h1 className="mt-5 max-w-3xl font-display text-[2.7rem] font-medium leading-[1.04] tracking-[-0.03em] sm:text-6xl md:text-7xl">
-          New-build
-          <br />
-          residential roofs.
+          {business.tagline.replace(/\.$/, "")}.
         </h1>
         <p className="mt-6 max-w-md font-display text-xl text-paper/90 sm:text-2xl">
           {business.promise}
