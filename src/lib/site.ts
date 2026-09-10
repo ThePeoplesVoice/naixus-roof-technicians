@@ -68,39 +68,39 @@ export const services = [
   {
     id: "sheeting",
     name: "Roof sheeting",
-    image: "/images/job-sheeting.jpg",
-    alt: "Corrugated sheets going down over insulation on a new-build roof",
+    image: "/images/done-ridge.jpg",
+    alt: "Finished corrugated sheeting with ridge and hip capping on a new-build roof",
   },
   {
     id: "valleys",
     name: "Valleys & ridge capping",
-    image: "/images/valley.jpg",
-    alt: "Metal valley tray with even fall and overlapping sheets",
+    image: "/images/done-valley.jpg",
+    alt: "Valley tray with even fall between corrugated roof planes",
   },
   {
     id: "flashings",
     name: "Finishing flashings",
-    image: "/images/flashings.jpg",
-    alt: "Finishing flashing at a roof-to-wall junction on a new house",
+    image: "/images/done-hip.jpg",
+    alt: "Hip and ridge capping junctions on a finished new-build roof",
   },
 ] as const;
 
 export const jobPlates = [
   {
-    image: "/images/day-ridge.jpg",
-    alt: "Roll insulation down one roof plane, corrugated sheets on the other",
+    image: "/images/done-ridge.jpg",
+    alt: "Finished corrugated sheeting, hips and ridge capping on a new-build roof",
   },
   {
-    image: "/images/job-sheeting.jpg",
-    alt: "Corrugated sheets laid over insulation on a new-build roof",
+    image: "/images/done-valley.jpg",
+    alt: "Valley tray with even fall between corrugated roof planes",
   },
   {
-    image: "/images/day-height.jpg",
-    alt: "Two-storey new-build roof with insulation on open timber trusses",
+    image: "/images/done-hip.jpg",
+    alt: "Hip and ridge capping cut clean on a new-build roof",
   },
   {
-    image: "/images/day-eave.jpg",
-    alt: "Under-sheet roll insulation lapping the eave over corrugated cladding",
+    image: "/images/done-planes.jpg",
+    alt: "Hip intersections and sheet planes on a finished residential roof",
   },
 ] as const;
 
