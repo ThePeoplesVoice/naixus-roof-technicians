@@ -3,44 +3,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  buildEnquireMailtoBody,
+  buildEnquirePayload,
+  emptyEnquireFields,
+  validateEnquire,
+  type EnquireFields,
+} from "@/lib/enquire";
 import { business, roles, suburbs } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-type Fields = {
-  name: string;
-  role: string;
-  suburb: string;
-  message: string;
-  company: string;
-};
-
-const empty: Fields = {
-  name: "",
-  role: "Builder",
-  suburb: "",
-  message: "",
-  company: "",
-};
-
 export function EnquireForm({ invert = false }: { invert?: boolean }) {
-  const [fields, setFields] = useState<Fields>(empty);
-  const [errors, setErrors] = useState<Partial<Fields>>({});
+  const [fields, setFields] = useState<EnquireFields>(emptyEnquireFields);
+  const [errors, setErrors] = useState<Partial<EnquireFields>>({});
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
 
-  function validate(next: Fields) {
-    const e: Partial<Fields> = {};
-    if (!next.name.trim()) e.name = "Your name is required.";
-    if (!next.suburb) e.suburb = "Choose a suburb.";
-    if (next.message.trim().length < 12)
-      e.message = "A little more on the build helps.";
-    return e;
-  }
-
   async function onSubmit(ev: FormEvent) {
     ev.preventDefault();
-    const e = validate(fields);
+    const e = validateEnquire(fields);
     setErrors(e);
     setSendError("");
     if (Object.keys(e).length) return;
@@ -51,15 +33,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
     }
 
     setSending(true);
-    const payload = {
-      name: fields.name.trim(),
-      role: fields.role,
-      suburb: fields.suburb,
-      message: fields.message.trim(),
-      _subject: `Dhu Roofing enquiry — ${fields.suburb}`,
-      _template: "table",
-      _captcha: "false",
-    };
+    const payload = buildEnquirePayload(fields);
 
     try {
       const res = await fetch(
@@ -76,13 +50,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
       if (!res.ok) throw new Error("send failed");
       setSent(true);
     } catch {
-      const body = [
-        `Name: ${payload.name}`,
-        `Role: ${payload.role}`,
-        `Suburb: ${payload.suburb}`,
-        "",
-        payload.message,
-      ].join("\n");
+      const body = buildEnquireMailtoBody(payload);
       window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`;
       setSendError(
         "Couldn’t send through the form — your email app should be open with the message ready.",
@@ -120,7 +88,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           variant={invert ? "invert" : "outline"}
           className="mt-6"
           onClick={() => {
-            setFields(empty);
+            setFields(emptyEnquireFields);
             setSent(false);
           }}
         >
@@ -165,6 +133,45 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           className={fieldClass}
         />
         {errors.name ? <p className={errorClass}>{errors.name}</p> : null}
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor="email" className={labelClass}>
+            Email
+          </Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            value={fields.email}
+            onChange={(e) =>
+              setFields((f) => ({ ...f, email: e.target.value }))
+            }
+            className={fieldClass}
+          />
+          {errors.email ? <p className={errorClass}>{errors.email}</p> : null}
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="phone" className={labelClass}>
+            Phone
+          </Label>
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            value={fields.phone}
+            onChange={(e) =>
+              setFields((f) => ({ ...f, phone: e.target.value }))
+            }
+            className={fieldClass}
+          />
+          {errors.phone ? <p className={errorClass}>{errors.phone}</p> : null}
+        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
