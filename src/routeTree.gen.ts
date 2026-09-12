@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EnquireRouteImport } from './routes/enquire'
+import { Route as ApiEnquireRouteImport } from './routes/api/enquire'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const EnquireRoute = EnquireRouteImport.update({
   path: '/enquire',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiEnquireRoute = ApiEnquireRouteImport.update({
+  id: '/api/enquire',
+  path: '/api/enquire',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/enquire': typeof EnquireRoute
+  '/api/enquire': typeof ApiEnquireRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/enquire': typeof EnquireRoute
+  '/api/enquire': typeof ApiEnquireRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/enquire': typeof EnquireRoute
+  '/api/enquire': typeof ApiEnquireRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/enquire'
+  fullPaths: '/' | '/enquire' | '/api/enquire'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/enquire'
-  id: '__root__' | '/' | '/enquire'
+  to: '/' | '/enquire' | '/api/enquire'
+  id: '__root__' | '/' | '/enquire' | '/api/enquire'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EnquireRoute: typeof EnquireRoute
+  ApiEnquireRoute: typeof ApiEnquireRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnquireRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/enquire': {
+      id: '/api/enquire'
+      path: '/api/enquire'
+      fullPath: '/api/enquire'
+      preLoaderRoute: typeof ApiEnquireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EnquireRoute: EnquireRoute,
+  ApiEnquireRoute: ApiEnquireRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
