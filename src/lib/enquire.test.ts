@@ -1,11 +1,15 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildEnquireHtml,
   buildEnquireMailtoBody,
   buildEnquirePayload,
   emptyEnquireFields,
+  escapeHtml,
   isAustralianPhone,
   isBasicEmail,
+  isEnquireHoneypot,
+  parseEnquireFields,
   validateEnquire,
 } from "./enquire.ts";
 
@@ -94,5 +98,44 @@ describe("enquire payload", () => {
     assert.match(body, /Email: alex@example.com/);
     assert.match(body, /Phone: 0415 713 371/);
     assert.match(body, /New two-storey in Keysbrook/);
+  });
+
+  it("escapes HTML in the Resend body", () => {
+    const html = buildEnquireHtml(
+      buildEnquirePayload({
+        ...valid,
+        name: 'Alex <script>alert("x")</script>',
+        message: "Line one\nLine two & more",
+      }),
+    );
+    assert.match(html, /Alex &lt;script&gt;alert\(&quot;x&quot;\)&lt;\/script&gt;/);
+    assert.match(html, /Line one<br \/>Line two &amp; more/);
+    assert.equal(escapeHtml("<a>"), "&lt;a&gt;");
+  });
+});
+
+describe("parseEnquireFields", () => {
+  it("reads known strings and defaults role", () => {
+    const fields = parseEnquireFields({
+      name: "Alex",
+      email: "alex@example.com",
+      extra: 1,
+    });
+    assert.equal(fields.name, "Alex");
+    assert.equal(fields.email, "alex@example.com");
+    assert.equal(fields.role, "Builder");
+    assert.equal(fields.company, "");
+  });
+
+  it("treats junk bodies as empty fields", () => {
+    assert.equal(parseEnquireFields(null).name, "");
+    assert.equal(parseEnquireFields("nope").email, "");
+  });
+});
+
+describe("isEnquireHoneypot", () => {
+  it("flags a filled company field", () => {
+    assert.equal(isEnquireHoneypot({ ...valid, company: "Acme" }), true);
+    assert.equal(isEnquireHoneypot({ ...valid, company: "  " }), false);
   });
 });

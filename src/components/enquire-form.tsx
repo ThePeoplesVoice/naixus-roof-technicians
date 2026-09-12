@@ -10,6 +10,7 @@ import {
   validateEnquire,
   type EnquireFields,
 } from "@/lib/enquire";
+import { submitEnquireLead } from "@/lib/enquire-submit";
 import { business, roles, suburbs } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -33,20 +34,20 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
     }
 
     setSending(true);
-    const payload = buildEnquirePayload(fields);
-
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${business.email}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
+      const result = await submitEnquireLead(fields, {
+        fetch: globalThis.fetch.bind(globalThis),
+        formSubmitUrl: `https://formsubmit.co/ajax/${business.email}`,
       });
-      if (!res.ok) throw new Error("send failed");
-      setSent(true);
-    } catch {
+      if (result.outcome === "invalid") {
+        setErrors(result.errors);
+        return;
+      }
+      if (result.outcome === "sent") {
+        setSent(true);
+        return;
+      }
+      const payload = buildEnquirePayload(fields);
       const body = buildEnquireMailtoBody(payload);
       window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`;
       setSendError(
