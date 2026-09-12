@@ -3,44 +3,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  buildEnquireMailtoBody,
+  buildEnquirePayload,
+  emptyEnquireFields,
+  validateEnquire,
+  type EnquireFields,
+} from "@/lib/enquire";
 import { business, roles, suburbs } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-type Fields = {
-  name: string;
-  role: string;
-  suburb: string;
-  message: string;
-  company: string;
-};
-
-const empty: Fields = {
-  name: "",
-  role: "Builder",
-  suburb: "",
-  message: "",
-  company: "",
-};
-
 export function EnquireForm({ invert = false }: { invert?: boolean }) {
-  const [fields, setFields] = useState<Fields>(empty);
-  const [errors, setErrors] = useState<Partial<Fields>>({});
+  const [fields, setFields] = useState<EnquireFields>(emptyEnquireFields);
+  const [errors, setErrors] = useState<Partial<EnquireFields>>({});
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
 
-  function validate(next: Fields) {
-    const e: Partial<Fields> = {};
-    if (!next.name.trim()) e.name = "Your name is required.";
-    if (!next.suburb) e.suburb = "Choose a suburb.";
-    if (next.message.trim().length < 12)
-      e.message = "A little more on the build helps.";
-    return e;
-  }
-
   async function onSubmit(ev: FormEvent) {
     ev.preventDefault();
-    const e = validate(fields);
+    const e = validateEnquire(fields);
     setErrors(e);
     setSendError("");
     if (Object.keys(e).length) return;
@@ -51,38 +33,21 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
     }
 
     setSending(true);
-    const payload = {
-      name: fields.name.trim(),
-      role: fields.role,
-      suburb: fields.suburb,
-      message: fields.message.trim(),
-      _subject: `Dhu Roofing enquiry — ${fields.suburb}`,
-      _template: "table",
-      _captcha: "false",
-    };
+    const payload = buildEnquirePayload(fields);
 
     try {
-      const res = await fetch(
-        `https://formsubmit.co/ajax/${business.email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(payload),
+      const res = await fetch(`https://formsubmit.co/ajax/${business.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-      );
+        body: JSON.stringify(payload),
+      });
       if (!res.ok) throw new Error("send failed");
       setSent(true);
     } catch {
-      const body = [
-        `Name: ${payload.name}`,
-        `Role: ${payload.role}`,
-        `Suburb: ${payload.suburb}`,
-        "",
-        payload.message,
-      ].join("\n");
+      const body = buildEnquireMailtoBody(payload);
       window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`;
       setSendError(
         "Couldn’t send through the form — your email app should be open with the message ready.",
@@ -108,19 +73,17 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
         >
           Enquiry in
         </p>
-        <h3 className="mt-3 font-display text-3xl font-medium">
-          We’ll read this.
-        </h3>
+        <h3 className="mt-3 font-display text-3xl font-medium">We’ll read this.</h3>
         <p className="mt-4 max-w-md text-sm leading-relaxed opacity-80">
-          Shawn looks at every new-build enquiry. Limited projects each month —
-          if you’re planning ahead, that’s the right time to have written.
+          Shawn looks at every new-build enquiry. Limited projects each month — if you’re planning
+          ahead, that’s the right time to have written.
         </p>
         <Button
           type="button"
           variant={invert ? "invert" : "outline"}
           className="mt-6"
           onClick={() => {
-            setFields(empty);
+            setFields(emptyEnquireFields);
             setSent(false);
           }}
         >
@@ -146,9 +109,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           tabIndex={-1}
           autoComplete="off"
           value={fields.company}
-          onChange={(e) =>
-            setFields((f) => ({ ...f, company: e.target.value }))
-          }
+          onChange={(e) => setFields((f) => ({ ...f, company: e.target.value }))}
         />
       </div>
 
@@ -165,6 +126,41 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           className={fieldClass}
         />
         {errors.name ? <p className={errorClass}>{errors.name}</p> : null}
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-2">
+          <Label htmlFor="email" className={labelClass}>
+            Email
+          </Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            value={fields.email}
+            onChange={(e) => setFields((f) => ({ ...f, email: e.target.value }))}
+            className={fieldClass}
+          />
+          {errors.email ? <p className={errorClass}>{errors.email}</p> : null}
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="phone" className={labelClass}>
+            Phone
+          </Label>
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            value={fields.phone}
+            onChange={(e) => setFields((f) => ({ ...f, phone: e.target.value }))}
+            className={fieldClass}
+          />
+          {errors.phone ? <p className={errorClass}>{errors.phone}</p> : null}
+        </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -197,9 +193,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
             id="suburb"
             name="suburb"
             value={fields.suburb}
-            onChange={(e) =>
-              setFields((f) => ({ ...f, suburb: e.target.value }))
-            }
+            onChange={(e) => setFields((f) => ({ ...f, suburb: e.target.value }))}
             className={cn(
               "flex h-11 w-full rounded-md bg-paper px-3.5 text-base text-ink shadow-[inset_0_0_0_1px_var(--color-rule)] focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_1.5px_var(--color-metal)] md:text-sm",
               fieldClass,
@@ -227,34 +221,20 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           rows={5}
           placeholder="New-build residential. Timing, roof type if you know it, anything that helps."
           value={fields.message}
-          onChange={(e) =>
-            setFields((f) => ({ ...f, message: e.target.value }))
-          }
+          onChange={(e) => setFields((f) => ({ ...f, message: e.target.value }))}
           className={fieldClass}
         />
-        {errors.message ? (
-          <p className={errorClass}>{errors.message}</p>
-        ) : null}
+        {errors.message ? <p className={errorClass}>{errors.message}</p> : null}
       </div>
 
-      <p
-        className={cn(
-          "text-sm leading-relaxed",
-          invert ? "text-paper/60" : "text-stone",
-        )}
-      >
-        New-build residential only. Limited books — write in early if you’re
-        planning ahead. Or call / email Shawn directly.
+      <p className={cn("text-sm leading-relaxed", invert ? "text-paper/60" : "text-stone")}>
+        New-build residential only. Limited books — write in early if you’re planning ahead. Or call
+        / email Shawn directly.
       </p>
 
       {sendError ? <p className={errorClass}>{sendError}</p> : null}
 
-      <Button
-        type="submit"
-        size="lg"
-        variant={invert ? "invert" : "primary"}
-        disabled={sending}
-      >
+      <Button type="submit" size="lg" variant={invert ? "invert" : "primary"} disabled={sending}>
         {sending ? "Sending…" : business.cta}
       </Button>
     </form>
