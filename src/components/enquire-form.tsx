@@ -36,17 +36,14 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
     const payload = buildEnquirePayload(fields);
 
     try {
-      const res = await fetch(
-        `https://formsubmit.co/ajax/${business.email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(payload),
+      const res = await fetch(`https://formsubmit.co/ajax/${business.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-      );
+        body: JSON.stringify(payload),
+      });
       if (!res.ok) throw new Error("send failed");
       setSent(true);
     } catch {
@@ -76,12 +73,10 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
         >
           Enquiry in
         </p>
-        <h3 className="mt-3 font-display text-3xl font-medium">
-          We’ll read this.
-        </h3>
+        <h3 className="mt-3 font-display text-3xl font-medium">We’ll read this.</h3>
         <p className="mt-4 max-w-md text-sm leading-relaxed opacity-80">
-          Shawn looks at every new-build enquiry. Limited projects each month —
-          if you’re planning ahead, that’s the right time to have written.
+          Shawn looks at every new-build enquiry. Limited projects each month — if you’re planning
+          ahead, that’s the right time to have written.
         </p>
         <Button
           type="button"
@@ -114,9 +109,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           tabIndex={-1}
           autoComplete="off"
           value={fields.company}
-          onChange={(e) =>
-            setFields((f) => ({ ...f, company: e.target.value }))
-          }
+          onChange={(e) => setFields((f) => ({ ...f, company: e.target.value }))}
         />
       </div>
 
@@ -147,9 +140,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
             autoComplete="email"
             inputMode="email"
             value={fields.email}
-            onChange={(e) =>
-              setFields((f) => ({ ...f, email: e.target.value }))
-            }
+            onChange={(e) => setFields((f) => ({ ...f, email: e.target.value }))}
             className={fieldClass}
           />
           {errors.email ? <p className={errorClass}>{errors.email}</p> : null}
@@ -165,9 +156,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
             autoComplete="tel"
             inputMode="tel"
             value={fields.phone}
-            onChange={(e) =>
-              setFields((f) => ({ ...f, phone: e.target.value }))
-            }
+            onChange={(e) => setFields((f) => ({ ...f, phone: e.target.value }))}
             className={fieldClass}
           />
           {errors.phone ? <p className={errorClass}>{errors.phone}</p> : null}
@@ -204,9 +193,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
             id="suburb"
             name="suburb"
             value={fields.suburb}
-            onChange={(e) =>
-              setFields((f) => ({ ...f, suburb: e.target.value }))
-            }
+            onChange={(e) => setFields((f) => ({ ...f, suburb: e.target.value }))}
             className={cn(
               "flex h-11 w-full rounded-md bg-paper px-3.5 text-base text-ink shadow-[inset_0_0_0_1px_var(--color-rule)] focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_1.5px_var(--color-metal)] md:text-sm",
               fieldClass,
@@ -234,34 +221,20 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
           rows={5}
           placeholder="New-build residential. Timing, roof type if you know it, anything that helps."
           value={fields.message}
-          onChange={(e) =>
-            setFields((f) => ({ ...f, message: e.target.value }))
-          }
+          onChange={(e) => setFields((f) => ({ ...f, message: e.target.value }))}
           className={fieldClass}
         />
-        {errors.message ? (
-          <p className={errorClass}>{errors.message}</p>
-        ) : null}
+        {errors.message ? <p className={errorClass}>{errors.message}</p> : null}
       </div>
 
-      <p
-        className={cn(
-          "text-sm leading-relaxed",
-          invert ? "text-paper/60" : "text-stone",
-        )}
-      >
-        New-build residential only. Limited books — write in early if you’re
-        planning ahead. Or call / email Shawn directly.
+      <p className={cn("text-sm leading-relaxed", invert ? "text-paper/60" : "text-stone")}>
+        New-build residential only. Limited books — write in early if you’re planning ahead. Or call
+        / email Shawn directly.
       </p>
 
       {sendError ? <p className={errorClass}>{sendError}</p> : null}
 
-      <Button
-        type="submit"
-        size="lg"
-        variant={invert ? "invert" : "primary"}
-        disabled={sending}
-      >
+      <Button type="submit" size="lg" variant={invert ? "invert" : "primary"} disabled={sending}>
         {sending ? "Sending…" : business.cta}
       </Button>
     </form>

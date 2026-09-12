@@ -34,20 +34,15 @@ export function isBasicEmail(value: string): boolean {
   return BASIC_EMAIL.test(value.trim());
 }
 
-export function validateEnquire(
-  next: EnquireFields,
-): Partial<EnquireFields> {
+export function validateEnquire(next: EnquireFields): Partial<EnquireFields> {
   const e: Partial<EnquireFields> = {};
   if (!next.name.trim()) e.name = "Your name is required.";
   if (!next.email.trim()) e.email = "Your email is required.";
-  else if (!isBasicEmail(next.email))
-    e.email = "That email doesn’t look right.";
+  else if (!isBasicEmail(next.email)) e.email = "That email doesn’t look right.";
   if (!next.phone.trim()) e.phone = "Your phone is required.";
-  else if (!isAustralianPhone(next.phone))
-    e.phone = "Use an Australian number — 04xx or +61.";
+  else if (!isAustralianPhone(next.phone)) e.phone = "Use an Australian number — 04xx or +61.";
   if (!next.suburb) e.suburb = "Choose a suburb.";
-  if (next.message.trim().length < 12)
-    e.message = "A little more on the build helps.";
+  if (next.message.trim().length < 12) e.message = "A little more on the build helps.";
   return e;
 }
 
@@ -67,9 +62,7 @@ export function buildEnquirePayload(fields: EnquireFields) {
   };
 }
 
-export function buildEnquireMailtoBody(
-  payload: ReturnType<typeof buildEnquirePayload>,
-) {
+export function buildEnquireMailtoBody(payload: ReturnType<typeof buildEnquirePayload>) {
   return [
     `Name: ${payload.name}`,
     `Email: ${payload.email}`,
