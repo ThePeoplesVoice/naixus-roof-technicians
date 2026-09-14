@@ -53,7 +53,7 @@ export async function handleEnquirePost(
     return { status: 503, json: { ok: false, fallback: true } };
   }
 
-  const payload = buildEnquirePayload(fields);
+  const payload = buildEnquirePayload(fields, "vercel");
   const to = options.to?.trim() || ENQUIRE_TO_DEFAULT;
 
   try {

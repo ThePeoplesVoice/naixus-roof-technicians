@@ -85,16 +85,31 @@ describe("validateEnquire", () => {
 });
 
 describe("enquire payload", () => {
+  it("tags the subject with the lead source and keeps the suburb", () => {
+    assert.equal(
+      buildEnquirePayload(valid, "vercel")._subject,
+      "Dhu Roofing enquiry — Keysbrook [vercel]",
+    );
+    assert.equal(
+      buildEnquirePayload(valid, "formsubmit")._subject,
+      "Dhu Roofing enquiry — Keysbrook [formsubmit]",
+    );
+    assert.equal(
+      buildEnquirePayload(valid, "mailto")._subject,
+      "Dhu Roofing enquiry — Keysbrook [mailto]",
+    );
+  });
+
   it("includes email and phone in FormSubmit JSON", () => {
-    const payload = buildEnquirePayload(valid);
+    const payload = buildEnquirePayload(valid, "formsubmit");
     assert.equal(payload.email, "alex@example.com");
     assert.equal(payload.phone, "0415 713 371");
     assert.equal(payload._replyto, "alex@example.com");
-    assert.equal(payload._subject, "Dhu Roofing enquiry — Keysbrook");
+    assert.equal(payload._subject, "Dhu Roofing enquiry — Keysbrook [formsubmit]");
   });
 
   it("includes email and phone in the mailto body", () => {
-    const body = buildEnquireMailtoBody(buildEnquirePayload(valid));
+    const body = buildEnquireMailtoBody(buildEnquirePayload(valid, "mailto"));
     assert.match(body, /Email: alex@example.com/);
     assert.match(body, /Phone: 0415 713 371/);
     assert.match(body, /New two-storey in Keysbrook/);
@@ -102,11 +117,14 @@ describe("enquire payload", () => {
 
   it("escapes HTML in the Resend body", () => {
     const html = buildEnquireHtml(
-      buildEnquirePayload({
-        ...valid,
-        name: 'Alex <script>alert("x")</script>',
-        message: "Line one\nLine two & more",
-      }),
+      buildEnquirePayload(
+        {
+          ...valid,
+          name: 'Alex <script>alert("x")</script>',
+          message: "Line one\nLine two & more",
+        },
+        "vercel",
+      ),
     );
     assert.match(html, /Alex &lt;script&gt;alert\(&quot;x&quot;\)&lt;\/script&gt;/);
     assert.match(html, /Line one<br \/>Line two &amp; more/);

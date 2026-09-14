@@ -64,7 +64,7 @@ export async function submitEnquireLead(
     // API unreachable — FormSubmit, then mailto.
   }
 
-  const payload = buildEnquirePayload(fields);
+  const payload = buildEnquirePayload(fields, "formsubmit");
   try {
     const res = await deps.fetch(deps.formSubmitUrl, {
       method: "POST",

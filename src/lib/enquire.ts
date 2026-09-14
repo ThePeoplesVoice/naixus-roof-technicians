@@ -76,7 +76,13 @@ export function escapeHtml(value: string): string {
     .replaceAll('"', "&quot;");
 }
 
-export function buildEnquirePayload(fields: EnquireFields) {
+export type EnquireLeadSource = "vercel" | "formsubmit" | "mailto";
+
+export function buildEnquireSubject(suburb: string, source: EnquireLeadSource): string {
+  return `Dhu Roofing enquiry — ${suburb} [${source}]`;
+}
+
+export function buildEnquirePayload(fields: EnquireFields, source: EnquireLeadSource) {
   const email = fields.email.trim();
   return {
     name: fields.name.trim(),
@@ -85,7 +91,7 @@ export function buildEnquirePayload(fields: EnquireFields) {
     role: fields.role,
     suburb: fields.suburb,
     message: fields.message.trim(),
-    _subject: `Dhu Roofing enquiry — ${fields.suburb}`,
+    _subject: buildEnquireSubject(fields.suburb, source),
     _template: "table",
     _captcha: "false",
     _replyto: email,

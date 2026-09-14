@@ -47,7 +47,7 @@ export function EnquireForm({ invert = false }: { invert?: boolean }) {
         setSent(true);
         return;
       }
-      const payload = buildEnquirePayload(fields);
+      const payload = buildEnquirePayload(fields, "mailto");
       const body = buildEnquireMailtoBody(payload);
       window.location.href = `mailto:${business.email}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`;
       setSendError(
