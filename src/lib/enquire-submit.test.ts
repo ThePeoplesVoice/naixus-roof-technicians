@@ -37,18 +37,22 @@ describe("submitEnquireLead", () => {
 
   it("falls back to FormSubmit when the API is unavailable", async () => {
     const urls: string[] = [];
+    let formSubmitSubject = "";
     const result = await submitEnquireLead(valid, {
       formSubmitUrl,
-      fetch: async (input) => {
+      fetch: async (input, init) => {
         urls.push(String(input));
         if (String(input) === "/api/enquire") {
           return jsonResponse(503, { ok: false, fallback: true });
         }
+        const body = JSON.parse(String(init?.body ?? "{}")) as { _subject?: string };
+        formSubmitSubject = body._subject ?? "";
         return jsonResponse(200, { success: true });
       },
     });
     assert.deepEqual(result, { outcome: "sent", via: "formsubmit" });
     assert.deepEqual(urls, ["/api/enquire", formSubmitUrl]);
+    assert.equal(formSubmitSubject, "Dhu Roofing enquiry — Keysbrook [formsubmit]");
   });
 
   it("falls back to mailto when API and FormSubmit both fail", async () => {
