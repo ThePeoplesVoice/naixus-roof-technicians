@@ -1,6 +1,6 @@
 import { business } from "@/lib/site";
 
-export const SITE_URL = "https://naixus-roof-technicians.vercel.app";
+export const SITE_URL = "https://dhuroofing.com.au";
 
 export const defaultTitle = "Dhu Roofing — New-build residential roofs";
 

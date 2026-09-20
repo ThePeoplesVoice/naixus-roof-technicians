@@ -27,10 +27,16 @@ export function Hero() {
         <p className="mt-6 max-w-md font-display text-xl text-paper/90 sm:text-2xl">
           {business.promise}
         </p>
-        <div className="mt-10">
+        <div className="mt-10 flex flex-wrap items-center gap-6">
           <Button asChild size="lg" variant="invert">
             <Link to="/enquire">{business.cta}</Link>
           </Button>
+          <a
+            href={`tel:${business.phoneTel}`}
+            className="inline-flex min-h-11 items-center text-sm font-medium text-paper underline-offset-4 hover:underline"
+          >
+            {business.phone}
+          </a>
         </div>
       </div>
     </section>
