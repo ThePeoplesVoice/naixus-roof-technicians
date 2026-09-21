@@ -1,16 +1,17 @@
 export const business = {
-  name: "Dhu Roofing",
-  short: "Dhu",
-  operator: "Shawn Dhu",
+  name: "Aaron's Roof Plumbing",
+  short: "Aaron's",
+  operator: "Aaron's Roof Plumbing",
   abn: "19 542 516 839",
   base: "Keysbrook, WA",
-  years: 15,
+  years: 20,
   tagline: "New-build residential roofs.",
   promise: "Clean work. On time. Fair price.",
   cta: "Message us",
   email: "sbt.family.trust@gmail.com",
   phone: "0415 713 371",
   phoneTel: "+61415713371",
+  partner: "Partnered with Aaron's Roof Plumbing for 2026 and beyond.",
 } as const;
 
 export const suburbs = [
@@ -109,9 +110,8 @@ export const roles = ["Builder", "Developer", "Owner-builder", "Owner"] as const
 export const nav = [
   { href: "/#work", label: "Work" },
   { href: "/#area", label: "Area" },
-  { href: "/#about", label: "About" },
   { href: "/enquire", label: "Enquire" },
 ] as const;
 
 export const bio =
-  "Dhu Roofing — new-build residential roofs in Keysbrook, Serpentine, Jarrahdale, Armadale and the Peel corridor. Sarking, sheeting, valleys, ridge capping and finishing flashings. Clean work. On time. Fair price.";
+  "Aaron's Roof Plumbing — new-build residential roofs in Keysbrook, Serpentine, Jarrahdale, Armadale and the Peel corridor. Sarking, sheeting, valleys, ridge capping and finishing flashings. Clean work. On time. Fair price. Partnered with Aaron's Roof Plumbing for 2026 and beyond.";

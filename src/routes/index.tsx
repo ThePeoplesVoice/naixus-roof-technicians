@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { About } from "@/components/home/about";
 import { Area } from "@/components/home/area";
 import { EnquireBand } from "@/components/home/enquire-band";
 import { Hero } from "@/components/home/hero";
@@ -17,7 +16,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "RoofingContractor",
   name: business.name,
-  alternateName: ["Dhu Roofing Keysbrook", "Shawn Dhu Roofing"],
+  alternateName: ["Aaron's Roof Plumbing Keysbrook", "Dhu Roofing"],
   brand: { "@type": "Brand", name: business.name },
   url: SITE_URL,
   description: bio,
@@ -46,10 +45,6 @@ const jsonLd = {
     latitude: -32.433,
     longitude: 115.983,
   },
-  founder: {
-    "@type": "Person",
-    name: business.operator,
-  },
   knowsAbout: [
     "Roof sarking",
     "Roof sheeting",
@@ -67,7 +62,6 @@ function Home() {
         <Work />
         <OnSite />
         <Area />
-        <About />
         <EnquireBand />
       </main>
       <script

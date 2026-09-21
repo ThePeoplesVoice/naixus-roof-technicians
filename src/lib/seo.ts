@@ -2,10 +2,10 @@ import { business } from "@/lib/site";
 
 export const SITE_URL = "https://dhuroofing.com.au";
 
-export const defaultTitle = "Dhu Roofing — New-build residential roofs";
+export const defaultTitle = "Aaron's Roof Plumbing — New-build residential roofs";
 
 export const defaultDescription =
-  "New-build residential roofs in Keysbrook, Serpentine, Jarrahdale, Armadale and Peel. Sarking, sheeting, valleys, ridge capping and flashings. Clean work. On time. Fair price.";
+  "New-build residential roofs in Keysbrook, Serpentine, Jarrahdale, Armadale and Peel. Sarking, sheeting, valleys, ridge capping and flashings. Clean work. On time. Fair price. Partnered with Aaron's Roof Plumbing for 2026 and beyond.";
 
 export function absUrl(path = "/") {
   if (path.startsWith("http")) return path;
