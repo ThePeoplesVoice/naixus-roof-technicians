@@ -6,10 +6,30 @@ import { OnSite } from "@/components/home/on-site";
 import { Work } from "@/components/home/work";
 import { SiteShell } from "@/components/site-shell";
 import { bio, business, suburbs } from "@/lib/site";
-import { SITE_URL, absUrl } from "@/lib/seo";
+import {
+  SITE_URL,
+  absUrl,
+  defaultDescription,
+  defaultTitle,
+} from "@/lib/seo";
+
+const homeUrl = absUrl("/");
 
 export const Route = createFileRoute("/")({
   component: Home,
+  head: () => ({
+    meta: [
+      { title: defaultTitle },
+      { name: "description", content: defaultDescription },
+      { property: "og:title", content: defaultTitle },
+      { property: "og:description", content: defaultDescription },
+      { property: "og:url", content: homeUrl },
+    ],
+    links: [
+      { rel: "canonical", href: homeUrl },
+      { rel: "alternate", hrefLang: "en-AU", href: homeUrl },
+    ],
+  }),
 });
 
 const jsonLd = {
