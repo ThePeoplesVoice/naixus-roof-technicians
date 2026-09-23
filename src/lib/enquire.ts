@@ -79,7 +79,7 @@ export function escapeHtml(value: string): string {
 export type EnquireLeadSource = "vercel" | "formsubmit" | "mailto";
 
 export function buildEnquireSubject(suburb: string, source: EnquireLeadSource): string {
-  return `Dhu Roofing enquiry — ${suburb} [${source}]`;
+  return `Aaron's Roof Plumbing enquiry — ${suburb} [${source}]`;
 }
 
 export function buildEnquirePayload(fields: EnquireFields, source: EnquireLeadSource) {

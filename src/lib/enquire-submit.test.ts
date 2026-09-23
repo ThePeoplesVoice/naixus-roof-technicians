@@ -52,7 +52,7 @@ describe("submitEnquireLead", () => {
     });
     assert.deepEqual(result, { outcome: "sent", via: "formsubmit" });
     assert.deepEqual(urls, ["/api/enquire", formSubmitUrl]);
-    assert.equal(formSubmitSubject, "Dhu Roofing enquiry — Keysbrook [formsubmit]");
+    assert.equal(formSubmitSubject, "Aaron's Roof Plumbing enquiry — Keysbrook [formsubmit]");
   });
 
   it("falls back to mailto when API and FormSubmit both fail", async () => {

@@ -7,7 +7,7 @@ import {
   validateEnquire,
 } from "./enquire.ts";
 
-export const ENQUIRE_FROM = "Dhu Roofing <onboarding@resend.dev>";
+export const ENQUIRE_FROM = "Aaron's Roof Plumbing <onboarding@resend.dev>";
 export const ENQUIRE_TO_DEFAULT = "sbt.family.trust@gmail.com";
 
 export type EnquireMailer = (message: {

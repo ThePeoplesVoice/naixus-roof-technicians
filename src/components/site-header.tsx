@@ -33,7 +33,7 @@ export function SiteHeader() {
           <Mark className="text-metal" />
           <span className="leading-tight">
             <span className="block font-sans text-[0.7rem] font-medium uppercase tracking-[0.22em]">
-              Dhu Roofing
+              Aaron's Roof Plumbing
             </span>
             <span className="block text-[0.625rem] uppercase tracking-[0.16em] text-stone">
               Keysbrook, WA

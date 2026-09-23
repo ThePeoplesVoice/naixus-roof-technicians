@@ -34,7 +34,7 @@ describe("handleEnquirePost", () => {
     assert.equal(message.from, ENQUIRE_FROM);
     assert.equal(message.to, ENQUIRE_TO_DEFAULT);
     assert.equal(message.replyTo, "alex@example.com");
-    assert.equal(message.subject, "Dhu Roofing enquiry — Keysbrook [vercel]");
+    assert.equal(message.subject, "Aaron's Roof Plumbing enquiry — Keysbrook [vercel]");
     assert.match(message.text, /Phone: 0415 713 371/);
     assert.match(ENQUIRE_FROM, /onboarding@resend\.dev/);
   });

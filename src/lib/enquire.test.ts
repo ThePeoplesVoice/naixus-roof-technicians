@@ -88,15 +88,15 @@ describe("enquire payload", () => {
   it("tags the subject with the lead source and keeps the suburb", () => {
     assert.equal(
       buildEnquirePayload(valid, "vercel")._subject,
-      "Dhu Roofing enquiry — Keysbrook [vercel]",
+      "Aaron's Roof Plumbing enquiry — Keysbrook [vercel]",
     );
     assert.equal(
       buildEnquirePayload(valid, "formsubmit")._subject,
-      "Dhu Roofing enquiry — Keysbrook [formsubmit]",
+      "Aaron's Roof Plumbing enquiry — Keysbrook [formsubmit]",
     );
     assert.equal(
       buildEnquirePayload(valid, "mailto")._subject,
-      "Dhu Roofing enquiry — Keysbrook [mailto]",
+      "Aaron's Roof Plumbing enquiry — Keysbrook [mailto]",
     );
   });
 
@@ -105,7 +105,7 @@ describe("enquire payload", () => {
     assert.equal(payload.email, "alex@example.com");
     assert.equal(payload.phone, "0415 713 371");
     assert.equal(payload._replyto, "alex@example.com");
-    assert.equal(payload._subject, "Dhu Roofing enquiry — Keysbrook [formsubmit]");
+    assert.equal(payload._subject, "Aaron's Roof Plumbing enquiry — Keysbrook [formsubmit]");
   });
 
   it("includes email and phone in the mailto body", () => {
