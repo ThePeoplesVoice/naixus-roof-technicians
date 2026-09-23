@@ -402,13 +402,15 @@ function insertBeforeHeadClose(html, snippet) {
 }
 
 export function normalizeHeadContext(ctx = {}) {
-  const cwd = ctx.cwd ?? null;
-  const site = ctx.site ?? {};
+  const hasCwd = Object.prototype.hasOwnProperty.call(ctx, "cwd");
+  const cwd = hasCwd ? ctx.cwd : process.cwd();
+  const site = ctx.site ?? (hasCwd ? snapshotOgIdentity(cwd).site : {});
   // Middleware passes a baked `site`. Still consult the workspace so a
   // public/og.jpg generated after that snapshot (or missed by a wrong cwd)
   // wins over the og.grok.me placeholder. Vercel has no public/ to read, so
-  // a correct bake is unchanged.
-  const hydratedSite = ctx.cwd !== undefined ? applyCustomCardFromFs(site, cwd) : site;
+  // a correct bake is unchanged. Tests that omit `cwd` stay deterministic and
+  // avoid reading repository-specific branding from disk.
+  const hydratedSite = hasCwd ? applyCustomCardFromFs(site, cwd) : site;
   const appName = resolveOgTitle(hydratedSite, ctx.appName ?? DEFAULT_APP_NAME, ctx.host ?? "");
   return {
     appName,
@@ -416,7 +418,7 @@ export function normalizeHeadContext(ctx = {}) {
     creator: ctx.creator ?? readXCreator(),
     creatorId: ctx.creatorId ?? readXCreatorId(),
     host: ctx.host ?? "",
-    cwd,
+    cwd: hasCwd ? cwd : null,
     site: hydratedSite,
   };
 }
