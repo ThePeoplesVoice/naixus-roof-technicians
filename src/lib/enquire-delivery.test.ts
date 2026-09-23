@@ -36,7 +36,7 @@ describe("handleEnquirePost", () => {
     assert.equal(message.replyTo, "alex@example.com");
     assert.equal(message.subject, "Aaron's Roof Plumbing enquiry — Keysbrook [vercel]");
     assert.match(message.text, /Phone: 0415 713 371/);
-    assert.match(ENQUIRE_FROM, /onboarding@resend\.dev/);
+    assert.match(ENQUIRE_FROM, /noreply@dhuroofing\.com\.au/);
   });
 
   it("uses ENQUIRE_TO when provided", async () => {
@@ -50,6 +50,19 @@ describe("handleEnquirePost", () => {
       },
     });
     assert.equal(to, "ops@example.com");
+  });
+
+  it("uses ENQUIRE_FROM when provided", async () => {
+    let from = "";
+    await handleEnquirePost(valid, {
+      apiKey: "re_test",
+      from: "Ops <ops@dhuroofing.com.au>",
+      send: async (message) => {
+        from = message.from;
+        return { error: null };
+      },
+    });
+    assert.equal(from, "Ops <ops@dhuroofing.com.au>");
   });
 
   it("ignores honeypot spam without sending", async () => {

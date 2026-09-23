@@ -16,6 +16,7 @@ export const Route = createFileRoute("/api/enquire")({
         const apiKey = env("RESEND_API_KEY");
         const result = await handleEnquirePost(body, {
           apiKey,
+          from: env("ENQUIRE_FROM"),
           to: env("ENQUIRE_TO"),
           send: async (message) => {
             const { Resend } = await import("resend");

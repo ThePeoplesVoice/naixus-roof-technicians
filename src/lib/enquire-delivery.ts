@@ -7,7 +7,7 @@ import {
   validateEnquire,
 } from "./enquire.ts";
 
-export const ENQUIRE_FROM = "Aaron's Roof Plumbing <onboarding@resend.dev>";
+export const ENQUIRE_FROM = "Aaron's Roof Plumbing <noreply@dhuroofing.com.au>";
 export const ENQUIRE_TO_DEFAULT = "sbt.family.trust@gmail.com";
 
 export type EnquireMailer = (message: {
@@ -36,7 +36,7 @@ export type EnquireApiResult = {
  */
 export async function handleEnquirePost(
   body: unknown,
-  options: { apiKey: string | undefined; to?: string; send: EnquireMailer },
+  options: { apiKey: string | undefined; from?: string; to?: string; send: EnquireMailer },
 ): Promise<EnquireApiResult> {
   const fields = parseEnquireFields(body);
   if (isEnquireHoneypot(fields)) {
@@ -49,6 +49,7 @@ export async function handleEnquirePost(
   }
 
   const apiKey = options.apiKey?.trim();
+  const from = options.from?.trim() || ENQUIRE_FROM;
   if (!apiKey) {
     return { status: 503, json: { ok: false, fallback: true } };
   }
@@ -58,7 +59,7 @@ export async function handleEnquirePost(
 
   try {
     const { error } = await options.send({
-      from: ENQUIRE_FROM,
+      from,
       to,
       replyTo: payload.email,
       subject: payload._subject,
