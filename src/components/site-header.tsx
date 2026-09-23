@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Mark } from "@/components/mark";
 import { Button } from "@/components/ui/button";
-import { business, nav } from "@/lib/site";
+import { nav } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
