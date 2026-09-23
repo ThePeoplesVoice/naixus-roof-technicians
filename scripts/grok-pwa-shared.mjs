@@ -418,14 +418,15 @@ export function normalizeHeadContext(ctx = {}) {
     creator: ctx.creator ?? readXCreator(),
     creatorId: ctx.creatorId ?? readXCreatorId(),
     host: ctx.host ?? "",
-    cwd: hasCwd ? cwd : null,
+    cwd,
+    fsCwd: hasCwd ? cwd : null,
     site: hydratedSite,
   };
 }
 
 export function injectGrokPwaHead(html, ctx = {}) {
   if (typeof html !== "string") return html;
-  const { site, projectId, creator, creatorId, host, cwd } = normalizeHeadContext(ctx);
+  const { site, projectId, creator, creatorId, host, fsCwd } = normalizeHeadContext(ctx);
   const documentTitle = titleFromDocument(html);
   const appName = resolveOgTitle(
     site,
@@ -445,7 +446,7 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   next = insertAfterHeadOpen(
     next,
-    grokOgHeadTags({ host, appName, site, documentTitle, cwd }).join(""),
+    grokOgHeadTags({ host, appName, site, documentTitle, cwd: fsCwd }).join(""),
   );
 
   if (!next.includes("/grok-app-builder/extensions.js")) {
@@ -497,7 +498,7 @@ export function createHeadInjector(ctx = {}) {
       creator: normalized.creator,
       creatorId: normalized.creatorId,
       host: normalized.host,
-      cwd: normalized.cwd,
+      cwd: normalized.fsCwd,
       site: normalized.site,
     });
 
