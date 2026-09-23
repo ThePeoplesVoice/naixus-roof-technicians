@@ -409,7 +409,7 @@ export function normalizeHeadContext(ctx = {}) {
   // wins over the og.grok.me placeholder. Vercel has no public/ to read, so
   // a correct bake is unchanged.
   const hydratedSite = ctx.cwd !== undefined ? applyCustomCardFromFs(site, cwd) : site;
-  const appName = resolveOgTitle(site, ctx.appName ?? DEFAULT_APP_NAME, ctx.host ?? "");
+  const appName = resolveOgTitle(hydratedSite, ctx.appName ?? DEFAULT_APP_NAME, ctx.host ?? "");
   return {
     appName,
     projectId: ctx.projectId ?? readGrokProjectId(),
