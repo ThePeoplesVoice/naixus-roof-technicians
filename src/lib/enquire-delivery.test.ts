@@ -56,7 +56,7 @@ describe("handleEnquirePost", () => {
     let from = "";
     await handleEnquirePost(valid, {
       apiKey: "re_test",
-      from: "Ops <ops@dhuroofing.com.au>",
+      from: "  Ops <ops@dhuroofing.com.au>  ",
       send: async (message) => {
         from = message.from;
         return { error: null };
