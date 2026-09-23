@@ -51,12 +51,12 @@ export type CurrentUserState = {
  *   if (isPending) return null;              // still resolving — don't redirect yet
  *   if (!user) return <RedirectToSignIn />;  // definitely signed out
  *
- * `authEnabled` is a module-level constant fixed at load, so the guarded hook
- * call keeps a stable hook order across every render of a given component.
+ * `authEnabled` is a module-level constant fixed at load, so this module picks
+ * one implementation once and keeps hook order stable across every render of a
+ * given component.
  */
-export function useCurrentUserState(): CurrentUserState {
+function useEnabledCurrentUserState(): CurrentUserState {
   const { data, isPending } = authClient.useSession();
-  if (!authEnabled) return { user: DEV_USER, isPending: false };
   const user = data?.user;
   return {
     user: user
@@ -70,6 +70,18 @@ export function useCurrentUserState(): CurrentUserState {
       : null,
     isPending,
   };
+}
+
+function useDisabledCurrentUserState(): CurrentUserState {
+  return { user: DEV_USER, isPending: false };
+}
+
+const useCurrentUserStateImpl = authEnabled
+  ? useEnabledCurrentUserState
+  : useDisabledCurrentUserState;
+
+export function useCurrentUserState(): CurrentUserState {
+  return useCurrentUserStateImpl();
 }
 
 /**
