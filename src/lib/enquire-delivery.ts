@@ -7,7 +7,8 @@ import {
   validateEnquire,
 } from "./enquire.ts";
 
-export const ENQUIRE_FROM = "Dhu Roofing <onboarding@resend.dev>";
+export const ENQUIRE_FROM_DEFAULT = "Dhu Roofing <onboarding@resend.dev>";
+export const ENQUIRE_FROM = ENQUIRE_FROM_DEFAULT;
 export const ENQUIRE_TO_DEFAULT = "sbt.family.trust@gmail.com";
 
 export type EnquireMailer = (message: {
@@ -29,14 +30,27 @@ export type EnquireApiResult = {
   json: EnquireApiJson;
 };
 
+function resolveEnquireFrom(from?: string) {
+  const trimmed = from?.trim();
+  return trimmed || ENQUIRE_FROM_DEFAULT;
+}
+
 /**
  * Shared POST /api/enquire handler. Missing RESEND_API_KEY or a send failure
  * returns `{ fallback: true }` so the form can use FormSubmit/mailto.
  * Honeypot (`company`) is accepted as success and never emailed.
+ *
+ * From address: `options.from` / env ENQUIRE_FROM when set to a Resend-verified
+ * mailbox, otherwise the Resend onboarding default.
  */
 export async function handleEnquirePost(
   body: unknown,
-  options: { apiKey: string | undefined; to?: string; send: EnquireMailer },
+  options: {
+    apiKey: string | undefined;
+    to?: string;
+    from?: string;
+    send: EnquireMailer;
+  },
 ): Promise<EnquireApiResult> {
   const fields = parseEnquireFields(body);
   if (isEnquireHoneypot(fields)) {
@@ -55,10 +69,11 @@ export async function handleEnquirePost(
 
   const payload = buildEnquirePayload(fields, "vercel");
   const to = options.to?.trim() || ENQUIRE_TO_DEFAULT;
+  const from = resolveEnquireFrom(options.from);
 
   try {
     const { error } = await options.send({
-      from: ENQUIRE_FROM,
+      from,
       to,
       replyTo: payload.email,
       subject: payload._subject,
