@@ -2,7 +2,8 @@ import { business } from "@/lib/site";
 
 export const SITE_URL = "https://dhuroofing.com.au";
 
-export const defaultTitle = "Aaron's Roof Plumbing — New-build residential roofs";
+export const defaultTitle =
+  "Aaron's Roof Plumbing — New-build residential roofs";
 
 export const defaultDescription =
   "New-build residential roofs in Keysbrook, Serpentine, Jarrahdale, Armadale and Peel. Sarking, sheeting, valleys, ridge capping and flashings. Clean work. On time. Fair price. Partnered with Aaron's Roof Plumbing for 2026 and beyond.";
@@ -12,8 +13,8 @@ export function absUrl(path = "/") {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
+/** Site-wide defaults. Do not set page-specific canonical / og:url here — child routes own those so they do not stack. */
 export function rootHead() {
-  const url = absUrl("/");
   const image = absUrl("/og.jpg");
   return {
     meta: [
@@ -34,7 +35,6 @@ export function rootHead() {
       { property: "og:site_name", content: business.name },
       { property: "og:title", content: defaultTitle },
       { property: "og:description", content: defaultDescription },
-      { property: "og:url", content: url },
       { property: "og:image", content: image },
       {
         property: "og:image:alt",
@@ -46,8 +46,6 @@ export function rootHead() {
       { name: "twitter:image", content: image },
     ],
     links: [
-      { rel: "canonical", href: url },
-      { rel: "alternate", hrefLang: "en-AU", href: url },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },
@@ -58,7 +56,12 @@ export function rootHead() {
         crossOrigin: "anonymous" as const,
       },
       { rel: "dns-prefetch", href: "https://formsubmit.co" },
-      { rel: "preload", as: "image", href: "/images/hero.webp", type: "image/webp" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/images/hero.webp",
+        type: "image/webp",
+      },
     ],
   };
 }
