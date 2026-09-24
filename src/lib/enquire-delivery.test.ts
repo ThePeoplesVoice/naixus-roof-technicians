@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { ENQUIRE_FROM, ENQUIRE_TO_DEFAULT, handleEnquirePost } from "./enquire-delivery.ts";
+import {
+  ENQUIRE_FROM,
+  ENQUIRE_FROM_DEFAULT,
+  ENQUIRE_TO_DEFAULT,
+  handleEnquirePost,
+} from "./enquire-delivery.ts";
 import { emptyEnquireFields } from "./enquire.ts";
 
 const valid = {
@@ -31,7 +36,7 @@ describe("handleEnquirePost", () => {
       subject: string;
       text: string;
     };
-    assert.equal(message.from, ENQUIRE_FROM);
+    assert.equal(message.from, ENQUIRE_FROM_DEFAULT);
     assert.equal(message.to, ENQUIRE_TO_DEFAULT);
     assert.equal(message.replyTo, "alex@example.com");
     assert.equal(message.subject, "Dhu Roofing enquiry — Keysbrook [vercel]");
@@ -50,6 +55,32 @@ describe("handleEnquirePost", () => {
       },
     });
     assert.equal(to, "ops@example.com");
+  });
+
+  it("uses ENQUIRE_FROM when provided", async () => {
+    let from = "";
+    await handleEnquirePost(valid, {
+      apiKey: "re_test",
+      from: "Dhu Roofing <leads@dhuroofing.com.au>",
+      send: async (message) => {
+        from = message.from;
+        return { error: null };
+      },
+    });
+    assert.equal(from, "Dhu Roofing <leads@dhuroofing.com.au>");
+  });
+
+  it("ignores blank ENQUIRE_FROM and keeps the Resend default", async () => {
+    let from = "";
+    await handleEnquirePost(valid, {
+      apiKey: "re_test",
+      from: "   ",
+      send: async (message) => {
+        from = message.from;
+        return { error: null };
+      },
+    });
+    assert.equal(from, ENQUIRE_FROM_DEFAULT);
   });
 
   it("ignores honeypot spam without sending", async () => {
