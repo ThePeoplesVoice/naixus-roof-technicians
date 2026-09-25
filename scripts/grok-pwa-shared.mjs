@@ -333,11 +333,33 @@ function applyCustomCardFromFs(site, cwd) {
   return { ...site, card: "custom", image: disk };
 }
 
+/**
+ * Page-owned share keys. The route's own og:url / og:description are
+ * per-page facts the platform cannot know, so they survive the strip and are
+ * re-emitted; site.json description is only a fallback.
+ */
+const PAGE_OWNED_SHARE_KEYS = ["og:url", "og:description"];
+
+/** First `<meta property|name="key" content="…">` value in the document, unescaped. */
+export function readPageShareMeta(html, key) {
+  const tags = String(html ?? "").match(/<meta\b[^>]*>/gi) ?? [];
+  for (const tag of tags) {
+    const attr = tag.match(/\b(?:property|name)\s*=\s*["']([^"']+)["']/i);
+    if (!attr || String(attr[1]).toLowerCase() !== key) continue;
+    const content = tag.match(/\bcontent\s*=\s*"([^"]*)"|\bcontent\s*=\s*'([^']*)'/i);
+    const value = content ? unescapeHtml(content[1] ?? content[2] ?? "").trim() : "";
+    if (value) return value;
+  }
+  return "";
+}
+
 export function grokOgHeadTags({
   host = "",
   appName = DEFAULT_APP_NAME,
   site = {},
   documentTitle = "",
+  pageUrl = "",
+  pageDescription = "",
   cwd = process.cwd(),
 } = {}) {
   const title = resolveOgTitle(site, appName, host, documentTitle);
@@ -346,9 +368,14 @@ export function grokOgHeadTags({
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta property="og:title" content="${escapeHtml(title)}">`,
   ];
-  const description = String(site.description ?? "").trim();
+  const description =
+    String(pageDescription ?? "").trim() || String(site.description ?? "").trim();
   if (description) {
     tags.push(`<meta property="og:description" content="${escapeHtml(description)}">`);
+  }
+  const url = String(pageUrl ?? "").trim();
+  if (/^https?:\/\//i.test(url)) {
+    tags.push(`<meta property="og:url" content="${escapeHtml(url)}">`);
   }
   if (String(site.type ?? "").toLowerCase() === "x:game") {
     tags.push(`<meta property="og:type" content="x:game">`);
@@ -426,6 +453,9 @@ export function injectGrokPwaHead(html, ctx = {}) {
   if (typeof html !== "string") return html;
   const { site, projectId, creator, creatorId, host, cwd } = normalizeHeadContext(ctx);
   const documentTitle = titleFromDocument(html);
+  const [pageUrl, pageDescription] = PAGE_OWNED_SHARE_KEYS.map((key) =>
+    readPageShareMeta(html, key),
+  );
   const appName = resolveOgTitle(
     site,
     ctx.appName ?? DEFAULT_APP_NAME,
@@ -444,7 +474,15 @@ export function injectGrokPwaHead(html, ctx = {}) {
 
   next = insertAfterHeadOpen(
     next,
-    grokOgHeadTags({ host, appName, site, documentTitle, cwd }).join(""),
+    grokOgHeadTags({
+      host,
+      appName,
+      site,
+      documentTitle,
+      pageUrl,
+      pageDescription,
+      cwd,
+    }).join(""),
   );
 
   if (!next.includes("/grok-app-builder/extensions.js")) {
