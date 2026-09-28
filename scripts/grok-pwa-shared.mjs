@@ -37,14 +37,22 @@ export function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-/** Inverse of escapeHtml. Decode &amp; last so a single pass undoes one encode. */
+const NAMED_ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: "\u00a0" };
+
+/**
+ * Decode one layer of HTML entities (named, decimal `&#39;` and hex `&#x27;`), so text that
+ * React/Next already escaped is not escaped twice on re-injection. Single pass: `&amp;#x27;`
+ * decodes to the literal text `&#x27;`, never further.
+ */
 function unescapeHtml(value) {
-  return String(value)
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'")
-    .replaceAll("&amp;", "&");
+  return String(value).replace(/&(#x[0-9a-f]+|#[0-9]+|[a-z]+);/gi, (entity, body) => {
+    if (body[0] === "#") {
+      const hex = body[1] === "x" || body[1] === "X";
+      const code = Number.parseInt(body.slice(hex ? 2 : 1), hex ? 16 : 10);
+      return Number.isInteger(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : entity;
+    }
+    return NAMED_ENTITIES[body.toLowerCase()] ?? entity;
+  });
 }
 
 /** 6-digit hex for the og.grok.me placeholder, or "" if site.color is missing/invalid. */

@@ -36,3 +36,24 @@ test("readPageShareMeta reads single- or double-quoted content", () => {
   assert.equal(readPageShareMeta(`<meta property='og:url' content='https://a.au/'>`, "og:url"), "https://a.au/");
   assert.equal(readPageShareMeta('<meta name="description" content="d">', "og:url"), "");
 });
+
+test("decodes the page's entities before re-escaping (no double-escaped apostrophe)", () => {
+  const html =
+    "<html><head><title>Enquire — Aaron&#x27;s Roof Plumbing</title>" +
+    '<meta property="og:description" content="Aaron&#x27;s &amp; co &#39;quoted&#39; &quot;roofs&quot;"/>' +
+    '<meta property="og:url" content="https://example.com.au/enquire"/>' +
+    "</head></html>";
+  const out = injectGrokPwaHead(html, {});
+  assert.doesNotMatch(out, /&amp;#/);
+  assert.match(out, /property="og:title" content="Enquire — Aaron&#39;s Roof Plumbing"/);
+  assert.match(out, /property="og:description" content="Aaron&#39;s &amp; co &#39;quoted&#39; &quot;roofs&quot;"/);
+  assert.equal(injectGrokPwaHead(out, {}), out);
+});
+
+test("decoding is one layer only: literal &amp;#x27; text stays literal", () => {
+  const out = injectGrokPwaHead(
+    '<html><head><title>x</title><meta property="og:description" content="code: &amp;#x27;"/></head></html>',
+    {},
+  );
+  assert.match(out, /property="og:description" content="code: &amp;#x27;"/);
+});
